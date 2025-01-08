@@ -13,20 +13,27 @@ public class Main {
             "Андреевич", "Борисович", "Викторович", "Григорьевич", "Дмитриевич", "Евгеньевич", "Игоревич"
     };
 
-    private final static Employee[] EMPLOYEES = new Employee[10];
-    private static int employeeCount = 0;
+    // Поле типа Employee[], служащее хранилищем для записей о сотрудниках
+    private Employee[] employees;
+    private int employeeCount;
 
-    public static void main(String[] args) {
-        initEmployees();
+    public Main() {
+        this.employees = new Employee[10]; // Инициализируем массив в конструкторе
+        this.employeeCount = 0;
     }
 
-    private static void initEmployees() {
-        for (int i = 0; i < EMPLOYEES.length; i++) {
+    public static void main(String[] args) {
+        Main main = new Main();
+        main.initEmployees();
+    }
+
+    private void initEmployees() {
+        for (int i = 0; i < employees.length; i++) {
             String name = SURNAMES[RANDOM.nextInt(SURNAMES.length)] + " " +
                     NAMES[RANDOM.nextInt(NAMES.length)] + " " +
                     PATRONIMIC_NAMES[RANDOM.nextInt(PATRONIMIC_NAMES.length)];
             int salary = RANDOM.nextInt(50000, 100000);
-            EMPLOYEES[i] = new Employee(name, RANDOM.nextInt(1, 6), salary);
+            employees[i] = new Employee(name, RANDOM.nextInt(1, 6), salary);
             employeeCount++;
         }
 
@@ -38,54 +45,54 @@ public class Main {
         printEmployeeNames();
     }
 
-    private static void printAllEmployees() {
+    private void printAllEmployees() {
         System.out.println("Список всех сотрудников:");
         for (int i = 0; i < employeeCount; i++) {
-            System.out.println(EMPLOYEES[i]);
+            System.out.println(employees[i]);
         }
     }
 
-    private static double calculateTotalSalary() {
+    private double calculateTotalSalary() {
         double total = 0;
         for (int i = 0; i < employeeCount; i++) {
-            total += EMPLOYEES[i].getSalary();
+            total += employees[i].getSalary();
         }
         return total;
     }
 
-    private static Employee findEmployeeWithMinSalary() {
+    private Employee findEmployeeWithMinSalary() {
         if (employeeCount == 0) return null;
 
-        Employee minSalaryEmployee = EMPLOYEES[0];
+        Employee minSalaryEmployee = employees[0];
         for (int i = 1; i < employeeCount; i++) {
-            if (EMPLOYEES[i].getSalary() < minSalaryEmployee.getSalary()) {
-                minSalaryEmployee = EMPLOYEES[i];
+            if (employees[i].getSalary() < minSalaryEmployee.getSalary()) {
+                minSalaryEmployee = employees[i];
             }
         }
         return minSalaryEmployee;
     }
 
-    private static Employee findEmployeeWithMaxSalary() {
+    private Employee findEmployeeWithMaxSalary() {
         if (employeeCount == 0) return null;
 
-        Employee maxSalaryEmployee = EMPLOYEES[0];
+        Employee maxSalaryEmployee = employees[0];
         for (int i = 1; i < employeeCount; i++) {
-            if (EMPLOYEES[i].getSalary() > maxSalaryEmployee.getSalary()) {
-                maxSalaryEmployee = EMPLOYEES[i];
+            if (employees[i].getSalary() > maxSalaryEmployee.getSalary()) {
+                maxSalaryEmployee = employees[i];
             }
         }
         return maxSalaryEmployee;
     }
 
-    private static double calculateAverageSalary() {
+    private double calculateAverageSalary() {
         if (employeeCount == 0) return 0;
-        return (double) calculateTotalSalary() / employeeCount;
+        return calculateTotalSalary() / employeeCount;
     }
 
-    private static void printEmployeeNames() {
+    private void printEmployeeNames() {
         System.out.println("ФИО всех сотрудников:");
         for (int i = 0; i < employeeCount; i++) {
-            System.out.println(EMPLOYEES[i].getName());
+            System.out.println(employees[i].getName());
         }
     }
 }
